@@ -21,7 +21,7 @@ app.get("/api/city/:city", async (req, res) => {
 
         let response = await makeRequest(`http://api.geonames.org/searchJSON?username=${geoNamesUserName}&featureClass=P&country=SE&maxRows=5&name_startsWith=${req.params.city}`)
 
-        res.send(response)
+        res.json(response)
 
     } catch(e) {
         console.error(e)
@@ -35,7 +35,7 @@ app.get("/api/weather/:long/:lat", async (req, res) => {
 
         let response = await makeRequest(`https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${req.params.long}/lat/${req.params.lat}/data.json`);
 
-        res.send(response)
+        res.json(response)
 
     } catch(e) {
         console.error(e)
