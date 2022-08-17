@@ -1,0 +1,13 @@
+
+###
+
+// Test for api search for city name.
+GET http://localhost:3000/api/city/gote
+
+###
+
+
+// Test for api search weather.
+GET http://localhost:3000/api/weather/23.21667/67.15/
+
+###

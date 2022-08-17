@@ -21,6 +21,7 @@
   "homepage": "https://github.com/hugobengtsson/Weather-App-Backend#readme",
   "dependencies": {
     "express": "^4.18.1",
+    "node-fetch": "^3.2.10",
     "nodemon": "^2.0.19"
   }
 }
