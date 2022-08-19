@@ -1,7 +1,7 @@
 import Express from "express";
-import fetch from 'node-fetch';
 import { geoNamesUserName } from "./apiKeys.js"
 import makeRequest from "./request.js";
+import { nanoid } from "nanoid"
 
 const app = Express();
 const port = 3000;
@@ -60,9 +60,10 @@ app.get("/api/weather/:long/:lat", async (req, res) => {
         response.timeSeries.map((timeStamp) => {
 
             let weatherObject = {}
+            weatherObject.id = nanoid();
 
             let time = new Date(timeStamp.validTime)
-            
+
             let hour = time.getHours()
             weatherObject.hour = hour
 
