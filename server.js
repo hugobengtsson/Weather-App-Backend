@@ -1,95 +1,18 @@
-import Express from "express";
-import { geoNamesUserName } from "./apiKeys.js"
-import makeRequest from "./request.js";
-import { nanoid } from "nanoid"
+import express from "express";
+import { router as cityRouter } from "./routers/cityRouter.js"
+import { router as weatherRouter } from "./routers/weatherRouter.js"
 
-const app = Express();
+const app = express();
 const port = 3000;
 
 
-app.get("/", (req, res) => {
+
+app.use(express.json());
+app.use("/api/city", cityRouter);
+app.use("/api/weather", weatherRouter);
 
 
-    res.send("Hello värld")
 
-})
-
-
-app.get("/api/city/:city", async (req, res) => {
-
-    try {
-
-        let response = await makeRequest(`http://api.geonames.org/searchJSON?username=${geoNamesUserName}&featureClass=P&country=SE&maxRows=5&name_startsWith=${req.params.city}`)
-
-        let cityList = []
-
-        response.geonames.map((city) => {
-
-            let foundCity = cityList.find(cityFromList => cityFromList.name == city.toponymName);
-
-            if(!foundCity) {
-                let CityObject = {
-                    name: city.toponymName,
-                    region: city.adminName1,
-                    long: city.lng,
-                    lat: city.lat,
-                }
-    
-                cityList.push(CityObject)
-            }
-
-        })
-
-        res.json(cityList)
-
-    } catch(err) {
-        console.error(err)
-        res.status(err.status).json(err.message)
-    }
-
-})
-
-app.get("/api/weather/:long/:lat", async (req, res) => {
-
-    try {
-
-        let response = await makeRequest(`https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${req.params.long}/lat/${req.params.lat}/data.json`);
-
-        let weatherList = [];
-
-        response.timeSeries.map((timeStamp) => {
-
-            let weatherObject = {}
-            weatherObject.id = nanoid();
-
-            let time = new Date(timeStamp.validTime)
-
-            let hour = time.getHours()
-            weatherObject.hour = hour
-
-            let date = time.getDate()
-            weatherObject.date = date
-
-            timeStamp.parameters.map((parameter) => {
-                
-                
-                if(parameter.name == "t") {
-                    weatherObject.temp = parameter.values[0];
-                } else if(parameter.name = "Wsymb2") {
-                    weatherObject.symbol = parameter.values[0];
-                }
-            })
-
-            weatherList.push(weatherObject)
-        })
-
-        res.json(weatherList)
-
-    } catch(e) {
-        console.error(e)
-    }
-
-})
 
 
 
