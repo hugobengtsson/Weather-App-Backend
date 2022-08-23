@@ -10,4 +10,55 @@ GET http://localhost:3000/api/city/gote
 // Test for api search weather.
 GET http://localhost:3000/api/weather/23.21667/67.15/
 
+
 ###
+
+
+GET http://localhost:3000/api/city/favorites/all
+
+
+###
+
+
+POST http://localhost:3000/api/city/savecity
+Content-Type: application/json
+
+{
+    "name": "hej",
+    "cityName": "Hej",
+    "region": "Halland",
+    "lat": "1",
+    "long": "2"
+}
+
+###
+
+PUT http://localhost:3000/api/city/updatecity 
+Content-Type: application/json
+
+{
+    "name": "Hem",
+    "cityName": "Laholm",
+    "region": "Halland",
+    "lat": "1",
+    "long": "2",
+    "id": "1"
+}
+
+###
+
+DELETE http://localhost:3000/api/city/removecity 
+Content-Type: application/json
+
+{
+    "name": "Hem",
+    "cityName": "Laholm",
+    "region": "Halland",
+    "lat": "1",
+    "long": "2",
+    "id": "B5hAMD5Dmv1en-3DLGVY2"
+}
+
+###
+
+GET http://localhost:3000/api/city/favorites/all

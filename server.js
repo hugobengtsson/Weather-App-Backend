@@ -8,13 +8,10 @@ const port = 3000;
 
 
 app.use(express.json());
+
 app.use("/api/city", cityRouter);
+
 app.use("/api/weather", weatherRouter);
-
-
-
-
-
 
 
 app.listen( port, () => {
