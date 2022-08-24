@@ -48,8 +48,9 @@ router.get("/favorites/all", (req, res) => {
 
         if(savedCities.length == 0) {
             res.send(false)
+        } else {
+            res.json(savedCities)
         }
-        res.json(savedCities)
 
     } catch(err) {
         res.status(400).json(err.message)
