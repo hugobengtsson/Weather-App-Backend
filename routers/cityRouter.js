@@ -8,7 +8,7 @@ import makeRequest from "../request.js";
 export const router = express.Router();
 
 
-router.get("/:city", async (req, res) => {
+router.get("/getcity/:city", async (req, res) => {
 
     try {
 
@@ -22,7 +22,7 @@ router.get("/:city", async (req, res) => {
 
             if(!foundCity) {
                 let CityObject = {
-                    name: city.toponymName,
+                    cityName: city.toponymName,
                     region: city.adminName1,
                     long: city.lng,
                     lat: city.lat,
@@ -40,23 +40,14 @@ router.get("/:city", async (req, res) => {
 
 })
 
-let savedCities = [
-    {
-        "name": "hej",
-        "cityName": "Laholm",
-        "region": "Halland",
-        "lat": "1",
-        "long": "2",
-        "id": "1"
-    }
-];
+let savedCities = [];
 
 router.get("/favorites/all", (req, res) => {
 
     try {
 
         if(savedCities.length == 0) {
-            throw new Error(false)
+            res.send(false)
         }
         res.json(savedCities)
 
@@ -71,7 +62,7 @@ router.post("/savecity", (req, res) => {
     try {
 
         if(!req.body) {
-            throw new Error(false)
+            res.send(false)
         }
 
         let foundIndex = savedCities.findIndex(city => city.cityName === req.body.cityName)
@@ -100,7 +91,7 @@ router.put("/updatecity", (req, res) => {
         let foundIndex = savedCities.findIndex(city => city.id === req.body.id);
 
         if(foundIndex == -1) {
-            throw new Error(false)
+            res.send(false)
         }
 
         savedCities[foundIndex].name = req.body.name;
@@ -114,17 +105,18 @@ router.put("/updatecity", (req, res) => {
 })
 
 router.delete("/removecity", (req, res) => {
-
+    console.log("hello")
     try {
 
         let foundIndex = savedCities.findIndex(city => city.id === req.body.id);
 
         if(foundIndex == -1) {
-            throw new Error(false)
+            res.send(false)
+        } else {
+            savedCities.splice(foundIndex, 1)
+            res.json(true)
         }
 
-        savedCities.splice(foundIndex, 1)
-        res.json(true)
 
     } catch(err) {
         res.status(400).json(err.message)
