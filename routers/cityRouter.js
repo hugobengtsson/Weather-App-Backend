@@ -77,7 +77,7 @@ router.post("/savecity", (req, res) => {
 
         savedCities.push(newCity)
 
-        res.json(true)
+        res.json(savedCities[savedCities.length - 1])
 
     } catch(err) {
         res.status(400).json(err.message)
@@ -89,7 +89,7 @@ router.put("/updatecity", (req, res) => {
 
     try {
 
-        let foundIndex = savedCities.findIndex(city => city.id === req.body.id);
+        let foundIndex = savedCities.findIndex(city => city.cityName === req.body.cityName);
 
         if(foundIndex == -1) {
             res.send(false)

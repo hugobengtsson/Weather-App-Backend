@@ -6,7 +6,7 @@ const app = express();
 const port = 3000;
 
 
-
+// Converting all requests from JSON.
 app.use(express.json());
 
 app.use("/api/city", cityRouter);
